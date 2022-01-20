@@ -17,7 +17,8 @@ react native navigation is required
 To run this project, install it locally using npm:
 
 ```
-$ cd ../lorem
-$ npm install
+$ expo init
+$ npm install @react-navigation/native
+$ npm install @react-navigation/native-stack
 $ expo start
 ```
