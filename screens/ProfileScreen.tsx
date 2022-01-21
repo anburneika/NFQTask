@@ -18,7 +18,14 @@ const [user, setUser] = useState({
 
 const logout = () => {
     //clean user data here?
-    setUser({});
+    setUser(
+      {uuid:  '',
+      image: '',
+      firstName: '',
+      lastName: '',
+      address: '',
+      phone: '',}
+    );
     appData.setLoggedIn(false);
   }
 
@@ -57,7 +64,7 @@ const getUserData = async (token:string) => {
               style={styles.logoutButton}
               onPress={() => logout()}
               >
-                <Text>Logout</Text>
+                <Text style={styles.logoutText}>Logout</Text>
               </Pressable>
             </View>
       {
@@ -73,9 +80,9 @@ const getUserData = async (token:string) => {
                 uri: `${user.image}`,
               }}
               />
-            <Text style={styles.logInText}>{user.firstName} {user.lastName}</Text>
-            <Text style={styles.logInText}>{user.address}</Text>
-            <Text style={styles.logInText}>{user.phone}</Text>
+            <Text style={styles.text}>{user.firstName} {user.lastName}</Text>
+            <Text style={styles.text}>{user.address}</Text>
+            <Text style={styles.text}>{user.phone}</Text>
             <StatusBar style="auto" />
           </>
         )
@@ -86,25 +93,16 @@ const getUserData = async (token:string) => {
 }
 
   const styles = StyleSheet.create({
-    input: {
-      height: 50,
-      width: '80%',
-      marginTop: 20,
-      borderWidth: 1,
-      padding: 10,
-      fontSize: 20,
-      textAlign: 'center',
-    },
     container: {
       flex: 1,
       backgroundColor: '#fff',
       alignItems: 'center',
-      justifyContent: 'center',
+      justifyContent: 'flex-start',
     },
     logoutContainer: {
-      position: 'absolute',
-      borderBottomWidth: 1,
-      top: 0,
+      marginTop: 30,
+      borderBottomWidth: 0.5,
+      //top: 30,
       width: '100%',
       alignItems: 'flex-end',
     },
@@ -116,11 +114,16 @@ const getUserData = async (token:string) => {
       width: '30%',
     },
     logo: {
-      marginBottom: 60,
-      width: 120,
-      height: 120,
+      marginBottom: 20,
+      marginTop: 20,
+      width: '90%',
+      aspectRatio: 1,
     },
-    logInText: {
+    text: {
+      fontSize: 20,
+      marginTop: 20,
+    },
+    logoutText: {
       fontSize: 20,
     }
   });

@@ -115,10 +115,11 @@ container: {
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
 },
 logo: {
     marginBottom: 60,
+    marginTop: 110,
     width: 120,
     height: 120,
 },
