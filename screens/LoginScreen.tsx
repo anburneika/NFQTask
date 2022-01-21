@@ -19,26 +19,20 @@ export default function LoginScreen() {
           
       if (username.length > 0 && password.length > 0){
           //add some proper validation
-          var data = {
-          'username': `${username}`,
-          'password': `${password}`,
-          }
-          var formBody: Array<string> | string = [];
+
+          // var data = {
+          // 'username': `${username}`,
+          // 'password': `${password}`,
+          // }
+          var requestParams= "username=" + encodeURIComponent(username) + "&password=" + encodeURIComponent(password);
           var token: string | undefined;
-          for (var property in data) {
-          var encodedKey = encodeURIComponent(property);
-          var encodedValue = encodeURIComponent(data[property]);
-          formBody.push(encodedKey + "=" + encodedValue);
-          }
-          formBody = formBody.join("&");
-          token = await getToken(url, formBody);
-          if (token == 'noDataReceived') {
-          //add some warning that entered login data is incorrect
-          console.log('nothing received from server');
-          } else {
-          appData.setToken(token);
-          appData.setLoggedIn(true);
-          }
+          // Object.entries(data).forEach(
+          //   ([key, value]) => requestParams = requestParams + encodeURIComponent(key) + "=" + encodeURIComponent(value) + "&",
+          // );
+          //token = await getToken(url, requestParams.slice(0, -1));
+
+          token = await getToken(url, requestParams);
+          {token !== undefined? (appData.setToken(token), appData.setLoggedIn(true)): console.log('nothing received from server')}
       } else {
           //add some warnning to enter correct info
           console.log("username or password not entered")
@@ -46,7 +40,6 @@ export default function LoginScreen() {
     }
     
     const getToken = async (url:string, formBody:string) => {
-      const myError = 'noDataReceived';
       let receivedToken = '';
       try {
           const response = await fetch(url, {
@@ -58,11 +51,7 @@ export default function LoginScreen() {
       });
       const json = await response.json(); 
       receivedToken = json.token;
-          if (typeof receivedToken === "undefined") {
-          return myError;
-          } else {
-          return receivedToken;
-          }
+      return receivedToken;
       } catch (error) {
           console.error(error);
       }
@@ -91,9 +80,6 @@ export default function LoginScreen() {
           style={styles.logInButton}
           onPress={() => onPressLogin(username,password)}
         >
-          {/* if (isloading) {
-            <ActivityIndicator size="large" color="#00ff00" />
-          } else { */}
             <Text style={styles.logInText}>SUBMIT</Text>
         </Pressable>
         <StatusBar style="auto" />

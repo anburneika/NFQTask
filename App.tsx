@@ -6,13 +6,16 @@ import ProfileScreen from './screens/ProfileScreen'
 
 import AppContext from './components/AppContext';
 
+
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
 
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [token, setToken] = useState('');
+  const [loggedIn, setLoggedIn] = useState<boolean>(false);
+  const [token, setToken] = useState<string>('');
   
+
 
   const appData = {
     loggedIn,

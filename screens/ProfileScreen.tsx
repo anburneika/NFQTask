@@ -80,7 +80,7 @@ const getUserData = async (token:string) => {
                 uri: `${user.image}`,
               }}
               />
-            <Text style={styles.text}>{user.firstName} {user.lastName}</Text>
+            <Text style={styles.text}>{user.firstName} iuhuih {user.lastName}</Text>
             <Text style={styles.text}>{user.address}</Text>
             <Text style={styles.text}>{user.phone}</Text>
             <StatusBar style="auto" />
@@ -102,7 +102,6 @@ const getUserData = async (token:string) => {
     logoutContainer: {
       marginTop: 30,
       borderBottomWidth: 0.5,
-      //top: 30,
       width: '100%',
       alignItems: 'flex-end',
     },
