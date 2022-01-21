@@ -1,7 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useContext, useEffect, useState } from 'react';
 import { ActivityIndicator, StyleSheet, Text, View, Image, Pressable } from 'react-native';
-import AppContext from '../components/AppContext';
+
+import AppContext, {storeData} from '../components/AppContext';
 
 
 export default function ProfileScreen() {
@@ -26,6 +27,7 @@ const logout = () => {
       address: '',
       phone: '',}
     );
+    storeData('');
     appData.setLoggedIn(false);
   }
 

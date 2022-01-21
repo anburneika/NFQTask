@@ -1,7 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useContext, useState } from 'react';
 import { StyleSheet, Text, View, Image, TextInput, Pressable } from 'react-native';
-import AppContext from '../components/AppContext';
+import AppContext, {storeData} from '../components/AppContext';
+
 
 
 
@@ -12,6 +13,8 @@ export default function LoginScreen() {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState(''); 
+
+
 
     const onPressLogin = async (username:string, password:string) => {
 
@@ -32,7 +35,7 @@ export default function LoginScreen() {
           //token = await getToken(url, requestParams.slice(0, -1));
 
           token = await getToken(url, requestParams);
-          {token !== undefined? (appData.setToken(token), appData.setLoggedIn(true)): console.log('nothing received from server')}
+          {token !== undefined? (appData.setToken(token), appData.setLoggedIn(true), storeData(token)): console.log('nothing received from server')}
       } else {
           //add some warnning to enter correct info
           console.log("username or password not entered")

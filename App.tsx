@@ -1,21 +1,40 @@
-import React, { useState }  from 'react';
+import React, { useEffect, useState }  from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from './screens/LoginScreen'
 import ProfileScreen from './screens/ProfileScreen'
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppContext from './components/AppContext';
 
 
 
 const Stack = createNativeStackNavigator();
 
+
+
 export default function App() {
 
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
   const [token, setToken] = useState<string>('');
-  
 
+  const getToken = async () => {
+    try {
+      const userToken = await AsyncStorage.getItem('userToken')
+      if(userToken !== null) {
+        if (userToken !== '')
+        setToken(userToken);
+        setLoggedIn(true);
+      } else {
+        setLoggedIn(false);
+      }
+    } catch(e) {
+      // error reading value
+    }
+  }
+  
+  useEffect(() => {
+    getToken();
+  }, [])
 
   const appData = {
     loggedIn,
