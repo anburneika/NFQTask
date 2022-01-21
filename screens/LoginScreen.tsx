@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useContext, useState } from 'react';
-import { StyleSheet, Text, View, Image, TextInput, Pressable } from 'react-native';
+import React, { useContext, useState, useEffect } from 'react';
+import { ActivityIndicator, StyleSheet, Text, View, Image, TextInput, Pressable } from 'react-native';
 import AppContext, {storeData} from '../components/AppContext';
 
 
@@ -60,31 +60,46 @@ export default function LoginScreen() {
       }
     }
 
+    // useEffect(() => {
+    //   appData.setLoading(false);
+    // }, [])
+
     return (
       <View style={styles.container}>
-        <Image
-          style={styles.logo}
-          source={{
-            uri: 'https://placeimg.com/80/80/tech',
-          }}
-          />
-        <TextInput
-          style={styles.input}
-          placeholder='Username'
-          onChangeText={(username) => setUsername(username)}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder='Password'
-          secureTextEntry={true}
-          onChangeText={(password) => setPassword(password)}
-        />
-        <Pressable
-          style={styles.logInButton}
-          onPress={() => onPressLogin(username,password)}
-        >
-            <Text style={styles.logInText}>SUBMIT</Text>
-        </Pressable>
+        {
+          appData.loading? (
+            <>
+              <ActivityIndicator style={styles.loading} size="large" color="#00ff00" />
+            </>
+          ) : (
+            <>
+              <Image
+                style={styles.logo}
+                source={{
+                  uri: 'https://placeimg.com/80/80/tech',
+                }}
+                />
+              <TextInput
+                style={styles.input}
+                placeholder='Username'
+                onChangeText={(username) => setUsername(username)}
+              />
+              <TextInput
+                style={styles.input}
+                placeholder='Password'
+                secureTextEntry={true}
+                onChangeText={(password) => setPassword(password)}
+              />
+              <Pressable
+                style={styles.logInButton}
+                onPress={() => onPressLogin(username,password)}
+              >
+                  <Text style={styles.logInText}>SUBMIT</Text>
+              </Pressable>
+            </>
+          )
+        }
+        
         <StatusBar style="auto" />
       </View>
     );
@@ -99,6 +114,9 @@ input: {
     padding: 10,
     fontSize: 20,
     textAlign: 'center',
+},
+loading : {
+  marginTop: '50%',
 },
 container: {
     flex: 1,

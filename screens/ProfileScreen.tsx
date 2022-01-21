@@ -72,7 +72,7 @@ const getUserData = async (token:string) => {
       {
         user.uuid === '' ? (
           <>
-            <ActivityIndicator size="large" color="#00ff00" />
+            <ActivityIndicator style={styles.loading} size="large" color="#00ff00" />
           </>
         ) : (
           <>
@@ -100,6 +100,9 @@ const getUserData = async (token:string) => {
       backgroundColor: '#fff',
       alignItems: 'center',
       justifyContent: 'flex-start',
+    },
+    loading : {
+      marginTop: '50%',
     },
     logoutContainer: {
       marginTop: 30,

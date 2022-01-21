@@ -14,8 +14,10 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
 
+  const [loading, setLoading] = useState<boolean>(true);
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
   const [token, setToken] = useState<string>('');
+  
 
   const getToken = async () => {
     try {
@@ -24,8 +26,10 @@ export default function App() {
         if (userToken !== '')
         setToken(userToken);
         setLoggedIn(true);
+        setLoading(false);
       } else {
         setLoggedIn(false);
+        setLoading(false);
       }
     } catch(e) {
       // error reading value
@@ -37,6 +41,8 @@ export default function App() {
   }, [])
 
   const appData = {
+    loading,
+    setLoading,
     loggedIn,
     setLoggedIn,
     token,
@@ -46,19 +52,19 @@ export default function App() {
   return (
     <NavigationContainer>
       <AppContext.Provider value={appData}>
-        <Stack.Navigator>
+        <Stack.Navigator> 
             {
               !loggedIn ? (
                 <>
                   <Stack.Screen options={{headerShown: false}} name="Login" component={LoginScreen} />
                 </>
               ) : (
+
                 <>
                   <Stack.Screen options={{headerShown: false}} name="Profile" component={ProfileScreen} />
                 </>
               )
-            }
-          
+            } 
         </Stack.Navigator>
       </AppContext.Provider>
     </NavigationContainer>
