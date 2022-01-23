@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from './screens/LoginScreen'
 import ProfileScreen from './screens/ProfileScreen'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import AppContext from './components/AppContext';
+import AppContext  from './components/AppContext';
 
 
 
@@ -17,8 +17,9 @@ export default function App() {
   const [loading, setLoading] = useState<boolean>(true);
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
   const [token, setToken] = useState<string>('');
-  
 
+  console.log('checking page reloads');
+  
   const getTokenFromAsyncStorage = async () => {
     try {
       const userToken = await AsyncStorage.getItem('userToken')
@@ -27,12 +28,13 @@ export default function App() {
         setToken(userToken);
         setLoggedIn(true);
         setLoading(false);
+        return userToken;
       } else {
         setLoggedIn(false);
         setLoading(false);
+        return '';
       }
     } catch(e) {
-      // error reading value
     }
   }
   

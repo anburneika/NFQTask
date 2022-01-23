@@ -18,7 +18,6 @@ const [user, setUser] = useState({
                                 });
 
 const logout = () => {
-    //clean user data here?
     setUser(
       {uuid:  '',
       image: '',
@@ -32,9 +31,6 @@ const logout = () => {
   }
 
 const getUserData = async (token:string) => {
-
-    //console.log('did getUserData receive token? ' + token);
-
     const url = 'https://vidqjclbhmef.herokuapp.com/user';
     try {
       const response = await fetch(url, {
@@ -77,7 +73,7 @@ const getUserData = async (token:string) => {
         ) : (
           <>
             <Image
-              style={styles.logo}
+              style={styles.userImg}
               source={{
                 uri: `${user.image}`,
               }}
@@ -117,7 +113,7 @@ const getUserData = async (token:string) => {
       height: 30,
       width: '30%',
     },
-    logo: {
+    userImg: {
       marginBottom: 20,
       marginTop: 20,
       width: '90%',

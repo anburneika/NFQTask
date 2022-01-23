@@ -3,12 +3,7 @@ import React, { useContext, useState } from 'react';
 import { KeyboardAvoidingView, TouchableHighlight, ActivityIndicator, StyleSheet, Text, View, Image, TextInput } from 'react-native';
 import AppContext, {storeData} from '../components/AppContext';
 
-
-
-
-
 export default function LoginScreen() {
-
     const appData = useContext(AppContext);
 
     const [username, setUsername] = useState('');
@@ -16,16 +11,14 @@ export default function LoginScreen() {
 
     const onPressLogin = async (username:string, password:string) => {
       const url = 'https://vidqjclbhmef.herokuapp.com/credentials';
-          
       if (username.length > 6 && password.length > 6){
-          //add some proper validation? sanitize is needed?
-          //could use foreach with array or something to show that i know it works, but it seems too much for this...
-          var requestParams= "username=" + encodeURIComponent(username) + "&password=" + encodeURIComponent(password);
+          //add some better validation? is some sanitization needed?
+          //could use foreach with array or something to build the params string for getToken, but it seems too much for this...
           var token: string | undefined;
-          token = await getToken(url, requestParams);
+          token = await getToken(url, `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`);
           {token !== undefined? (appData.setToken(token), appData.setLoggedIn(true), storeData(token))
             //do we want to alert that username is incorrect or just invalid?
-            : alert('Please enter valid username and password!'), console.log('nothing received from server')}
+            : alert('Please enter valid username and password!')}
       } else {
           alert('Please enter valid username and password!')
       }
@@ -92,7 +85,6 @@ export default function LoginScreen() {
             </>
           )
         }
-        
         <StatusBar style="auto" />
       </KeyboardAvoidingView>
     );

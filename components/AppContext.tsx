@@ -8,7 +8,6 @@ export const storeData = async (token:string) => {
       // saving error
     }
   }
-  
 
 interface AppContextInterface {
     loading: boolean,
