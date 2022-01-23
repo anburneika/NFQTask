@@ -19,7 +19,7 @@ export default function App() {
   const [token, setToken] = useState<string>('');
   
 
-  const getToken = async () => {
+  const getTokenFromAsyncStorage = async () => {
     try {
       const userToken = await AsyncStorage.getItem('userToken')
       if(userToken !== null) {
@@ -37,7 +37,7 @@ export default function App() {
   }
   
   useEffect(() => {
-    getToken();
+    getTokenFromAsyncStorage();
   }, [])
 
   const appData = {

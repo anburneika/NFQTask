@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useContext, useState, useEffect } from 'react';
-import { ActivityIndicator, StyleSheet, Text, View, Image, TextInput, Pressable } from 'react-native';
+import React, { useContext, useState } from 'react';
+import { KeyboardAvoidingView, TouchableHighlight, ActivityIndicator, StyleSheet, Text, View, Image, TextInput } from 'react-native';
 import AppContext, {storeData} from '../components/AppContext';
 
 
@@ -14,31 +14,20 @@ export default function LoginScreen() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState(''); 
 
-
-
     const onPressLogin = async (username:string, password:string) => {
-
       const url = 'https://vidqjclbhmef.herokuapp.com/credentials';
           
-      if (username.length > 0 && password.length > 0){
-          //add some proper validation
-
-          // var data = {
-          // 'username': `${username}`,
-          // 'password': `${password}`,
-          // }
+      if (username.length > 6 && password.length > 6){
+          //add some proper validation? sanitize is needed?
+          //could use foreach with array or something to show that i know it works, but it seems too much for this...
           var requestParams= "username=" + encodeURIComponent(username) + "&password=" + encodeURIComponent(password);
           var token: string | undefined;
-          // Object.entries(data).forEach(
-          //   ([key, value]) => requestParams = requestParams + encodeURIComponent(key) + "=" + encodeURIComponent(value) + "&",
-          // );
-          //token = await getToken(url, requestParams.slice(0, -1));
-
           token = await getToken(url, requestParams);
-          {token !== undefined? (appData.setToken(token), appData.setLoggedIn(true), storeData(token)): console.log('nothing received from server')}
+          {token !== undefined? (appData.setToken(token), appData.setLoggedIn(true), storeData(token))
+            //do we want to alert that username is incorrect or just invalid?
+            : alert('Please enter valid username and password!'), console.log('nothing received from server')}
       } else {
-          //add some warnning to enter correct info
-          console.log("username or password not entered")
+          alert('Please enter valid username and password!')
       }
     }
     
@@ -60,12 +49,8 @@ export default function LoginScreen() {
       }
     }
 
-    // useEffect(() => {
-    //   appData.setLoading(false);
-    // }, [])
-
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView style={{flex: 1}}>
         {
           appData.loading? (
             <>
@@ -73,35 +58,43 @@ export default function LoginScreen() {
             </>
           ) : (
             <>
-              <Image
-                style={styles.logo}
-                source={{
-                  uri: 'https://placeimg.com/80/80/tech',
-                }}
-                />
-              <TextInput
-                style={styles.input}
-                placeholder='Username'
-                onChangeText={(username) => setUsername(username)}
-              />
-              <TextInput
-                style={styles.input}
-                placeholder='Password'
-                secureTextEntry={true}
-                onChangeText={(password) => setPassword(password)}
-              />
-              <Pressable
-                style={styles.logInButton}
-                onPress={() => onPressLogin(username,password)}
-              >
-                  <Text style={styles.logInText}>SUBMIT</Text>
-              </Pressable>
+              <View style={styles.container}>
+                <View style={styles.logoContainer}>
+                  <Image
+                    style={styles.logo}
+                    source={{
+                      uri: 'https://placeimg.com/80/80/tech',
+                    }}
+                    />
+                </View>
+                <View style={styles.formContainer}>
+                  <TextInput
+                    style={styles.input}
+                    placeholder='Username'
+                    onChangeText={(username) => setUsername(username)}
+                  />
+                  <TextInput
+                    style={styles.input}
+                    placeholder='Password'
+                    secureTextEntry={true}
+                    onChangeText={(password) => setPassword(password)}
+                  />
+                  <TouchableHighlight
+                    style={styles.logInButton}
+                    underlayColor="#60C5FF"
+                    activeOpacity={0.7}
+                    onPress={() => onPressLogin(username,password)}
+                  >
+                      <Text style={styles.logInText}>SUBMIT</Text>
+                  </TouchableHighlight>
+                </View>
+              </View>
             </>
           )
         }
         
         <StatusBar style="auto" />
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 
@@ -111,6 +104,7 @@ input: {
     width: '80%',
     marginTop: 20,
     borderWidth: 1,
+    borderColor: '#C0C0C0',
     padding: 10,
     fontSize: 20,
     textAlign: 'center',
@@ -121,14 +115,22 @@ loading : {
 container: {
     flex: 1,
     backgroundColor: '#fff',
+    justifyContent: 'space-around',
+},
+logoContainer: {
+    flex: 1.5,     
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-around',
 },
 logo: {
-    marginBottom: 60,
-    marginTop: 110,
+    marginBottom: 0,
+    marginTop: 50,
     width: 120,
     height: 120,
+},
+formContainer : {
+    flex: 2,alignItems: 'center',
+    justifyContent: 'flex-start',
 },
 logInButton: {
     marginTop: 20,
@@ -143,4 +145,3 @@ logInText: {
     fontSize: 20,
 }
 });
-  
