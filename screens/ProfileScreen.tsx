@@ -41,7 +41,7 @@ const getUserData = async (token:string) => {
     });
     const json = await response.json(); 
         if (typeof json.uuid === "undefined") {
-        //add some warnings about not finding user data
+        //add some warnings about not finding user data?
         console.log("user data not received");
       } else {
         setUser(json);
@@ -78,7 +78,7 @@ const getUserData = async (token:string) => {
                 uri: `${user.image}`,
               }}
               />
-            <Text style={styles.text}>{user.firstName} iuhuih {user.lastName}</Text>
+            <Text style={styles.text}>{user.firstName} {user.lastName}</Text>
             <Text style={styles.text}>{user.address}</Text>
             <Text style={styles.text}>{user.phone}</Text>
             <StatusBar style="auto" />

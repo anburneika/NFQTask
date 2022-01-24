@@ -6,19 +6,13 @@ import ProfileScreen from './screens/ProfileScreen'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AppContext  from './components/AppContext';
 
-
-
 const Stack = createNativeStackNavigator();
-
-
 
 export default function App() {
 
   const [loading, setLoading] = useState<boolean>(true);
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
   const [token, setToken] = useState<string>('');
-
-  console.log('checking page reloads');
   
   const getTokenFromAsyncStorage = async () => {
     try {

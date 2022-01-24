@@ -9,7 +9,7 @@ export const storeData = async (token:string) => {
     }
   }
 
-interface AppContextInterface {
+type AppContextInterface = {
     loading: boolean,
     setLoading: (loggedIn: boolean) => void,
     loggedIn: boolean,
@@ -21,9 +21,9 @@ interface AppContextInterface {
 
 const AppContext = React.createContext<AppContextInterface>({
     loading: true,
-    setLoading: (loggedIn: boolean) => true,
+    setLoading: (loggedIn: boolean) => {},
     loggedIn: false,
-    setLoggedIn: (loggedIn= false) => false ,
+    setLoggedIn: (loggedIn= false) => {},
     token: '',
     setToken: (token= '') => '',
 });
